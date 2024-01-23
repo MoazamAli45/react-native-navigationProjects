@@ -10,7 +10,7 @@ import Home from './screens/Home';
 import Details from './screens/Details';
 
 //   Params TYPES ==================>
-type RootStackParamList = {
+export type RootStackParamList = {
   Home: undefined;
   Details: {product: Product};
 };
@@ -29,7 +29,7 @@ const App = () => {
           name="Details"
           component={Details}
           options={{
-            title: 'Details',
+            title: 'Details Product',
             headerStyle: {
               backgroundColor: '#f4511e',
             },

@@ -1,28 +1,33 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {FlatList, Pressable, StyleSheet, View} from 'react-native';
 import React from 'react';
 import ProductCard from '../components/ProductCard';
+import {PRODUCTS_LIST} from '../data/data';
+import Separator from '../components/Separator';
 
-const Home = () => {
+//   FOR NAVIAGTION Type Safety
+import {NativeStackScreenProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {RootStackParamList} from '../App';
+
+//   TO create a stack navigator
+
+type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
+const Home: React.FC<HomeProps> = ({navigation}) => {
   return (
-    <View>
-      <Text>Home</Text>
-      <ProductCard
-        product={{
-          id: '1',
-          name: 'APPLE iPhone 14 (Blue, 128 GB)',
-          imageUrl:
-            'https://rukminim1.flixcart.com/image/300/400/xif0q/mobile/3/5/l/-original-imaghx9qmgqsk9s4.jpeg',
-          originalPrice: 79990,
-          discountPrice: 65999,
-          offerPercentage: 17,
-          rating: 4.7,
-          ratingCount: 8794,
-          tags: [
-            '12MP Front Camera',
-            '12MP Dual Rear Camera',
-            '15.49 cm (6.1 inch) Super Retina XDR Display',
-          ],
-        }}
+    <View style={styles.container}>
+      <FlatList
+        data={PRODUCTS_LIST}
+        keyExtractor={item => item.id}
+        renderItem={({item}) => (
+          <Pressable
+            onPress={() =>
+              navigation.push('Details', {
+                product: item,
+              })
+            }>
+            <ProductCard product={item} />
+          </Pressable>
+        )}
+        ItemSeparatorComponent={Separator}
       />
     </View>
   );
@@ -30,4 +35,8 @@ const Home = () => {
 
 export default Home;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    padding: 12,
+  },
+});
